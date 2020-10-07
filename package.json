@@ -1,12 +1,15 @@
 {
     "name": "steamapi",
     "version": "1.0.0",
-    "description": "",
+    "description": "Steam API Endpoint",
     "main": "server.js",
     "scripts": {
         "start": "node server.js",
         "watch": "nodemon server.js",
         "test": "mocha test/* --exit"
+    },
+    "engines": {
+        "node": "12.19.0"
     },
     "keywords": [],
     "author": "",
