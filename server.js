@@ -27,7 +27,7 @@ module.exports = server
  * Connection feedback, optional
  */
 
-//server.listen(process.env.SERVER_PORT, console.log("\nEndpoint Active..."));
+server.listen(process.env.PORT || 5000, console.log("\nEndpoint Active..."));
 server.get('/', (req, res) => res.json({
     message: "STEAM API Endpoint",
 }));
