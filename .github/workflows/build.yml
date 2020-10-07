@@ -17,10 +17,12 @@ jobs:
     steps:
       - name: Checkout Repo v2
         uses: actions/checkout@v2
+      
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
+          
       - run: npm ci
       - run: npm test
   
@@ -33,6 +35,8 @@ jobs:
     steps:
       - name: Checkout Repo v2
         uses: actions/checkout@v2
+      - run: git fetch --prune --unshallow
+        
       - name: Deploying to Heroku
         env:
           TOKEN: ${{ secrets.HEROKU_TOKEN }}
