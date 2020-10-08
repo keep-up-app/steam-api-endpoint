@@ -29,7 +29,7 @@ module.exports = server
 
 server.listen(process.env.PORT || 5000, console.log("\nEndpoint Active..."));
 server.get('/', (req, res) => res.json({
-    message: "STEAM API Node",
+    message: "STEAM API Endpoint",
 }));
 
 
