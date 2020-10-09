@@ -25,7 +25,7 @@ jobs:
           
       - run: npm ci
         env: 
-          STEAM_API_KEY = ${{ secrets.STEAM_API_KEY }}
+          STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
       - run: npm test
   
   deploy:
