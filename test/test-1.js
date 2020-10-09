@@ -8,5 +8,5 @@ describe('Steam API response', function() {
             .expect({ message: "STEAM API Endpoint" }, callback);
     });
     console.log(process.env.BASE_URL);
-    console.log(process.env.STEAM_API_KEY);
+    console.log(process.env.STEAM_API_KEY == '3C928C31955258B04B76FCE7FDF70798');
 });
