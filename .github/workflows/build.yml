@@ -10,16 +10,18 @@ on:
     branches: [ master ]
 
 jobs:
+
   create-env:
  
     runs-on: ubuntu-18.04
  
     steps:
     - name: Create .env File
-      uses: SpicyPizza/create-envfile@v1
-      with:
-        envkey_STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
-        envkey_BASE_URL: ${{ secrets.BASE_URL }}
+      run: |
+        touch .env
+        echo BASE_URL={{ secrets.BASE_URL }} >> .env
+        echo STEAM_API_KEY={{ secrets.STEAM_API_KEY }} >> .env
+        cat .env
         
   test:
     
@@ -36,7 +38,7 @@ jobs:
         with:
           node-version: 14.x
           
-      - name: Running optimized CI installation of npm packages
+      - name: Running CI Installation
         run: npm ci
       - name: Running Application/Server Unit Tests
         run: npm test
