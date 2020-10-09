@@ -24,6 +24,8 @@ jobs:
           node-version: 14.x
           
       - run: npm ci
+        env: 
+          STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
       - run: npm test
         env: 
           STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
