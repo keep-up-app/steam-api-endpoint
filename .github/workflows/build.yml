@@ -15,11 +15,11 @@ jobs:
     runs-on: ubuntu-18.04
  
     steps:
-    - name: Make .env File
-      uses: SpicyPizza/create-envfile@v1
+    - name: Create .env File
+        uses: ozaytsev86/create-env-file@v1
       with:
-        envkey_STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
-        envkey_BASE_URL: ${{ secrets.BASEU_URL }}
+        ENV_STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
+        ENV_BASE_URL: ${{ secrets.BASEU_URL }}
         
   test:
     
