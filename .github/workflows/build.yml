@@ -16,10 +16,11 @@ jobs:
  
     steps:
     - name: Create .env File
-      uses: ozaytsev86/create-env-file@v1
-      with:
-        ENV_STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
-        ENV_BASE_URL: ${{ secrets.BASEU_URL }}
+      run: |
+          touch .env
+          echo STEAM_API_KEY=${{ secrets.STEAM_API_KEY }} >> >> .env
+          echo BASE_URL=${{ secrets.BASE_URL }} >> .env
+          cat .env
         
   test:
     
