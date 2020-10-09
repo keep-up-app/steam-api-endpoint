@@ -18,18 +18,14 @@ jobs:
     - name: Make .env File
       uses: SpicyPizza/create-envfile@v1
       with:
-        envkey_STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
-        envkey_BASE_URL: ${{ secrets.BASEU_URL }}
+        INPUT_ENVKEY_STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
+        INPUT_ENVKEY_BASE_URL: ${{ secrets.BASEU_URL }}
         
   test:
     
     needs: [create-env]
 
     runs-on: ubuntu-latest
-    
-    env: 
-      BASE_URL: ${{ secrets.BASE_URL }}
-      STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
 
     steps:
       - name: Checkout Repo v2
