@@ -12,7 +12,7 @@ module.exports = router;
 
 /**
  * Redirects user to steam login page.
- * URI: /steam/auth
+ * URI: /steam/user/auth
  * 
  * @method {GET}
  */
@@ -25,7 +25,7 @@ router.get('/auth', async(req, res) => {
 
 /**
  * Authenticate Used through OpenID and gets JSON Steam user Object
- * URI: /steam/authenticate
+ * URI: /steam/user/authenticate
  * 
  * @method {GET}
  */
