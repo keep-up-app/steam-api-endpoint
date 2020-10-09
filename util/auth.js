@@ -9,7 +9,7 @@ const SteamAuth = require("node-steam-openid");
  */
 
 module.exports = new SteamAuth({
-    realm: `${process.env.INPUT_ENVKEY_BASE_URL}/steam/user/auth`,
-    returnUrl: `${process.env.INPUT_ENVKEY_BASE_URL}/steam/user/auth`,
-    apiKey: process.env.INPUT_ENVKEY_STEAM_API_KEY
+    realm: `${process.env.BASE_URL}/steam/user/auth`,
+    returnUrl: `${process.env.BASE_URL}/steam/user/auth`,
+    apiKey: process.env.STEAM_API_KEY
 });
