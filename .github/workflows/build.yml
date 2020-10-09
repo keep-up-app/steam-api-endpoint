@@ -11,18 +11,6 @@ on:
 
 jobs:
 
-  create-env:
- 
-    runs-on: ubuntu-18.04
- 
-    steps:
-    - name: Create .env File
-      run: |
-        touch .env
-        echo BASE_URL=${{ secrets.BASE_URL }} >> .env
-        echo STEAM_API_KEY=${{ secrets.STEAM_API_KEY }} >> .env
-        cat .env
-        
   test:
     
     needs: [create-env]
