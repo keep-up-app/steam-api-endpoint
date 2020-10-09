@@ -16,7 +16,8 @@ jobs:
 
     steps:
       - name: Checkout Repo v2
-        env: ${{ secrets.STEAM_API_KEY }}
+        env: 
+          STEAM_API_KEY = ${{ secrets.STEAM_API_KEY }}
         uses: actions/checkout@v2
       
       - name: Use Node.js 14.x
