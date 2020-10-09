@@ -17,8 +17,13 @@ jobs:
     env: 
       BASE_URL: ${{ secrets.BASE_URL }}
       STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
+  
 
     steps:
+      - with:
+          BASE_URL: ${{ env.BASE_URL }}
+          STEAM_API_KEY: ${{ env.STEAM_API_KEY }}
+      
       - name: Checkout Repo v2
         uses: actions/checkout@v2
       
