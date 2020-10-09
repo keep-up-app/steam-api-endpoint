@@ -1,11 +1,4 @@
 /**
- * Loading .env config file.
- */
-
-require('custom-env').env();
-
-
-/**
  * Include all dependencies
  */
 
