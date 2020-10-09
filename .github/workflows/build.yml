@@ -30,7 +30,7 @@ jobs:
       - name: Running optimized CI installation of npm packages
         run: npm ci
       - name: Running Server Tests
-      - run: npm test
+        run: npm test
   
   deploy:
     
