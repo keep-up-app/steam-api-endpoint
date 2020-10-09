@@ -27,7 +27,9 @@ jobs:
         with:
           node-version: 14.x
           
-      - run: npm ci
+      - name: Running optimized CI installation of npm packages
+        run: npm ci
+      - name: Running Server Tests
       - run: npm test
   
   deploy:
