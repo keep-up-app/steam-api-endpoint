@@ -18,18 +18,19 @@ jobs:
     - name: Create .env File
         uses: ozaytsev86/create-env-file@v1
       with:
+<<<<<<< HEAD
         ENV_STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
         ENV_BASE_URL: ${{ secrets.BASEU_URL }}
+=======
+        INPUT_ENVKEY_STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
+        INPUT_ENVKEY_BASE_URL: ${{ secrets.BASEU_URL }}
+>>>>>>> 5be9860944fc4b14dccab76c7633d3fdf5ce2750
         
   test:
     
     needs: [create-env]
 
     runs-on: ubuntu-latest
-    
-    env: 
-      BASE_URL: ${{ secrets.BASE_URL }}
-      STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
 
     steps:
       - name: Checkout Repo v2
