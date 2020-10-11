@@ -1,8 +1,10 @@
 /**
- * Getting Steam user owned games
+ * Loading test dependencies
  */
 
-const { request } = require('../server');
+const request = require('supertest')
+const server = require('../server');
+
 
 describe('Get owned games with: 76561198272843849', () => {
     it('gets games', callback => {
@@ -16,10 +18,6 @@ describe('Get owned games with: 76561198272843849', () => {
     });
 });
 
-
-/**
- * Wrong steamid given
- */
 
 describe('Gets owned games with invalid steamid: 7656119827284384', () => {
     it('gets games with wrong id', callback => {
