@@ -9,8 +9,8 @@ module.exports.constructModel = data => {
     let appid = data.appid || 0;
     let playtime = Math.floor(data.playtime_forever / 60) || 0;
     let playtime_readable = readableTime(playtime * 3600);
-    let logo = `${process.env.APP_LOGO_URL}/${appid}/${data.img_logo_url}.jpg` || null;
-    let banner = `${process.env.APP_BANNER_URL}/${appid}/header.jpg` || null;
+    let logo = `${process.env.GAME_LOGO_URL}/${appid}/${data.img_logo_url}.jpg` || null;
+    let banner = `${process.env.GAME_BANNER_URL}/${appid}/header.jpg` || null;
 
     return {
         name: name,

@@ -4,20 +4,26 @@
 
 const request = require('supertest')
 const server = require('../server');
+const chai = require('chai');
+const assert = chai.assert;
+
+// Usable json response data for testing
+const expectedJson = require('../test/expected-json/owned-game-response.json');
 
 
 describe('Retrieves games from /steam/games/owned', () => {
 
-    let expectedJson = require('../test/expected-json/owned-game-response.json');
 
     it('gets games with valid id', callback => {
 
         let steamid = '76561198272843849';
-        let total = expectedJson.total;
 
         request(server).get(`/steam/game/owned/${steamid}`)
-            .expect(200)
-            .expect(res => { res.body.data.total == total }, callback);
+            .expect(res => {
+                assert.equal(expectedJson.total, res.body.total);
+            })
+            .expect(200, callback);
+
     });
 
     it('gets games with invalid id', callback => {
