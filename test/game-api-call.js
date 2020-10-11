@@ -17,7 +17,7 @@ describe('Retrieves games from /steam/games/owned', () => {
 
         request(server).get(`/steam/game/owned/${steamid}`)
             .expect(200)
-            .expect(expectedJson.total == total, callback);
+            .expect(res => { res.body.data.total == total }, callback);
     });
 
     it('gets games with invalid id', callback => {
@@ -26,6 +26,6 @@ describe('Retrieves games from /steam/games/owned', () => {
 
         request(server).get(`/steam/game/owned/${invalidSteamId}`)
             .expect(500)
-            .expect({ error: 'Invalid steamid provided: 7656119827284384' }, callback)
+            .expect({ error: `Invalid steamid provided: ${invalidSteamId}` }, callback)
     });
 });
