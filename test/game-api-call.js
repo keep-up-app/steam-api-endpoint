@@ -6,24 +6,26 @@ const request = require('supertest')
 const server = require('../server');
 
 
-describe('Get owned games with: 76561198272843849', () => {
-    it('gets games', callback => {
+describe('Retrieves games from /steam/games/owned', () => {
 
-        let expectedJson = require('../test/expected-json/owned-game-response.json');
+    let expectedJson = require('../test/expected-json/owned-game-response.json');
+
+    it('gets games with valid id', callback => {
+
         let steamid = '76561198272843849';
+        let total = expectedJson.total;
 
         request(server).get(`/steam/game/owned/${steamid}`)
             .expect(200)
-            .expect(expectedJson, callback);
+            .expect(expectedJson.total == total, callback);
     });
-});
 
+    it('gets games with invalid id', callback => {
 
-describe('Gets owned games with invalid steamid: 7656119827284384', () => {
-    it('gets games with wrong id', callback => {
+        let invalidSteamId = '7656119827284';
 
-        request(server).get(`/steam/game/owned/${steamid}`)
+        request(server).get(`/steam/game/owned/${invalidSteamId}`)
             .expect(500)
             .expect({ error: 'Invalid steamid provided: 7656119827284384' }, callback)
     });
-})
+});
