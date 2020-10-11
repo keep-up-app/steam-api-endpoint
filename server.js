@@ -39,6 +39,7 @@ server.get('/', (req, res) => res.json({
 
 server.use('/steam/user', require('./api/user')); // Steam Auth API
 server.use('/steam/item', require('./api/item')); // Steam Item API
+server.use('/steam/game', require('./api/game')); // Steam Game API
 
 
 /**

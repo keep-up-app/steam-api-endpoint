@@ -35,9 +35,7 @@ router.get('/authenticated', async(req, res) => {
 
         const user = await auth.authenticate(req);
         axios.post(`${process.env.USER_ENDPOINT}/steam/profile`, user)
-            .catch(err => {
-                console.error(err);
-            });
+            .catch(err => { console.error(err); });
 
         res.sendStatus(200);
 
