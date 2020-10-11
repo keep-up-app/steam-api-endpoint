@@ -4,7 +4,14 @@
 
 const axios = require('axios');
 const Game = require('../models/Game');
+const validator = require('../util/validator');
 
+
+/**
+ * Retreives all games from user
+ * 
+ * @param {Object} params 
+ */
 
 module.exports.getOwnedGame = (params) => {
     return new Promise(async(resolve, reject) => {
@@ -19,7 +26,7 @@ module.exports.getOwnedGame = (params) => {
             'apiKey': apikey
         }
 
-        let invalid = checkArgValidity(validate);
+        let invalid = validator.checkArgValidity(validate);
         if (invalid) reject(`Invalid ${invalid} provided: ${validate[invalid]}`);
 
         let baseUrl = `${gameInfoUrl}?key=${apikey}&include_played_free_games=${freeToPlay}&include_appinfo=1&steamid=${steamid}`
@@ -38,23 +45,4 @@ module.exports.getOwnedGame = (params) => {
 
         resolve({ total: count, games: games });
     });
-}
-
-
-/**
- * Validator function to determing which inputted field is invalid.
- * Returns first invalid key
- * 
- * @param  {Object} fields 
- */
-
-function checkArgValidity(fields) {
-    for (var key in fields) {
-        var field = fields[key];
-        if (fields[key] === undefined || fields[key] == "")
-            return key;
-        else if (key == 'steamid' && field.length != 17) {
-            return key;
-        }
-    }
 }
