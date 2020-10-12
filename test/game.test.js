@@ -11,15 +11,15 @@ const chai = require('chai');
  * Short hands for chai functions
  */
 
-const expect = chai.expect;
-const assert = chai.assert;
-const should = chai.should();
+var expect = chai.expect;
+var assert = chai.assert;
+var should = chai.should();
 
 
 // Usable json response data for testing
 
 
-describe('GET steam/game/owned/', () => {
+describe.skip('GET steam/game/owned/', () => {
 
     let expectedJson = require('./expected-json/owned-game-response.json');
     let valid = '76561198272843849';
