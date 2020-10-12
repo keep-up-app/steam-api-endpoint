@@ -3,46 +3,51 @@
  */
 
 const axios = require('axios');
-const Game = require('../models/Game');
-const validator = require('../util/validator');
 
 
 /**
- * Retreives all games from user
+ * Retreives all games from user through steam api
  * 
  * @param {Object} params 
  */
 
-module.exports.getOwnedGame = (params) => {
+module.exports.getOwnedGame = params => {
     return new Promise(async(resolve, reject) => {
+
         let steamid = params['steamid'];
-        let gameInfoUrl = params['url'];
+        let ownGameUrl = params['url'];
         let apikey = params['apiKey'];
-        let freeToPlay = params['freeToPlay'] || '1';
+        let ftp = params['ftp'] || '1';
 
-        let validate = {
-            'steamid': steamid,
-            'url': gameInfoUrl,
-            'apiKey': apikey
-        }
-
-        let invalid = validator.checkArgValidity(validate);
-        if (invalid) reject(`Invalid ${invalid} provided: ${validate[invalid]}`);
-
-        let baseUrl = `${gameInfoUrl}?key=${apikey}&include_played_free_games=${freeToPlay}&include_appinfo=1&steamid=${steamid}`
+        let baseUrl = `${ownGameUrl}?key=${apikey}&include_played_free_games=${ftp}&include_appinfo=1&steamid=${steamid}`
 
         const result = await axios.get(baseUrl)
             .then(res => res.data)
             .catch(err => reject(err))
 
-        let count = result.response.game_count;
-        var games = []
+        resolve(result ? result : { error: 'No games found.' });
+    });
+}
 
-        if (count === undefined && count === 0) reject('This Steam user has no game: ' + steamid);
 
-        for (var i = 0; i < count; i++)
-            games.push(Game.constructModel(result.response.games[i]));
+/**
+ * Retreives game info through steam api
+ * 
+ * @param {Object} params 
+ */
 
-        resolve({ total: count, games: games });
+module.exports.getGameInfo = params => {
+    return new Promise(async(resolve, reject) => {
+
+        let appid = params['appid'];
+        let gameInfoUrl = params['url'];
+
+        let baseUrl = `${gameInfoUrl}=${appid}`;
+
+        const result = await axios.get(baseUrl)
+            .then(res => res.data)
+            .catch(err => reject(err))
+
+        resolve(result ? result[appid].data : { error: 'No games found.' });
     });
 }
