@@ -125,8 +125,8 @@ module.exports.readableTime = readableTime;
  * @returns {String} readable
  */
 
-function readablePrice(price = price / 100) {
-    console.log(price);
+function readablePrice(price) {
+    price /= 100;
     if (price == 0) return 'Unavailable';
     else return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price);
 }
