@@ -3,6 +3,7 @@
  */
 
 const axios = require('axios');
+const { response } = require('express');
 
 
 /**
@@ -25,7 +26,7 @@ module.exports.getOwnedGame = params => {
             .then(res => res.data)
             .catch(err => reject(err))
 
-        resolve(result ? result : { error: 'No games found.' });
+        return resolve(result ? result : { error: 'No games found.' });
     });
 }
 
@@ -48,6 +49,97 @@ module.exports.getGameInfo = params => {
             .then(res => res.data)
             .catch(err => reject(err))
 
-        resolve(result ? result[appid].data : { error: 'No games found.' });
+        return resolve(result ? result[appid].data : { error: 'No game found.' });
+    });
+}
+
+
+/**
+ * Retreive game data for pagination 
+ * 
+ * @param {Object} params 
+ */
+
+module.exports.getAllGames = params => {
+    return new Promise(async(resolve, reject) => {
+
+        let count = params.count || 10;
+
+        let url = process.env.ALL_GAME_URL + "key=" + process.env.STEAM_API_KEY;
+        let data = await axios.get(url).catch(err => reject(err));
+
+        var games = [];
+
+        count = 0;
+        while(games.length <= count) {
+            let appid = data.data.applist.apps[count].appid
+            
+            let paramaters = {
+                appid: appid,
+                url: process.env.GAME_INFO_URL,
+            };
+
+            let game = await this.getGameInfo(paramaters)
+                .catch(err => reject(err));
+
+            if (game) {
+                console.log(count)
+                games.push(game)
+            }
+
+            count++;
+        }
+
+        console.log(games.length)
+
+        if (games) return resolve(games);
+        else return reject({ error: 'No games found.'});
+    });
+}
+
+
+/**
+ * Get basic game info
+ * @param {Object} params 
+ */
+
+module.exports.getGameInfo = params => {
+    return new Promise(async(resolve, reject) => {
+
+        let appid = params['appid'];
+        let gameInfoUrl = params['url'];
+
+        let baseUrl = `${gameInfoUrl}=${appid}`;
+
+        const result = await axios.get(baseUrl)
+            .then(res => res.data)
+            .catch(err => reject(err))
+
+        return resolve(result ? result[appid].data : { error: 'No game found.' });
+    });
+}
+
+
+/**
+ * Retreive game data for pagination 
+ * 
+ * @param {Object} params 
+ */
+
+module.exports.getBasicInfo = (page, range) => {
+    return new Promise(async(resolve, reject) => { 
+
+        let from = page * range;
+        let to = from + range;
+
+        let url = process.env.ALL_GAME_URL + "key=" + process.env.STEAM_API_KEY;
+        let data = await axios.get(url)
+            .then(data => data.data.applist.apps)
+            .catch(err => reject(err));
+
+        return resolve({
+            content: data.slice(from , to),
+            total: data.length
+        });
     });
 }

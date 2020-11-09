@@ -3,6 +3,7 @@
  */
 
 const gameController = require('../controllers/GameController');
+const format = require('../util/format')
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
@@ -45,12 +46,43 @@ router.get('/info/:appid', async(req, res) => {
 
 
 /**
+ * Get all games (IP BLACKLISTED)
+ * URI: steam/game/all/blocked
+ */
+
+router.get('/all/blocked', async(req, res) => {
+
+    let count = req.query.count || 10;
+
+    let data = await gameController.getAllGames({count: count})
+        .catch(err => res.send(err));
+    
+    let json = format.constructJSONPagination({
+        content: data,
+        count: count
+    });
+
+    res.send(json);
+});
+
+
+/**
  * Get all games
  * URI: steam/game/all
  */
 
 router.get('/all', async(req, res) => {
-    let url = process.env.ALL_GAME_URL + process.env.STEAM_API_KEY;
-    const data = await axios.get(url).catch(err => res.sendStatus(500));
-    res.send(data);
+
+    let page = req.query.page || 1;
+    let range = req.query.range || 10;
+
+    let data = await gameController.getBasicInfo(page, range)
+        .catch(err => res.send(err));
+
+    let baseUrl = `${process.env.BASE_URL}/steam/game/all`;
+    let json = format.constructJSONPagination(
+        baseUrl, data, page, range
+    );
+
+    res.send(json);
 });
