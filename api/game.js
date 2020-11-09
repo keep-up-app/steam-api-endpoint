@@ -73,8 +73,8 @@ router.get('/all/blocked', async(req, res) => {
 
 router.get('/all', async(req, res) => {
 
-    let page = req.query.page || 1;
-    let range = req.query.range || 10;
+    let page = parseInt(req.query.page) || 1;
+    let range = parseInt(req.query.range) || 10;
 
     let data = await gameController.getBasicInfo(page, range)
         .catch(err => res.send(err));

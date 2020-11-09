@@ -129,8 +129,8 @@ module.exports.getGameInfo = params => {
 module.exports.getBasicInfo = (page, range) => {
     return new Promise(async(resolve, reject) => { 
 
-        let from = page * range;
-        let to = from + range;
+        const from = page * range - range;
+        const to = page * range;
 
         let url = process.env.ALL_GAME_URL + "key=" + process.env.STEAM_API_KEY;
         let data = await axios.get(url)
