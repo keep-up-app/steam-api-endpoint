@@ -27,7 +27,7 @@ router.get('/all/:appid', async(req, res) => {
         range: range
     }).catch(err => res.json({ error: err }));
 
-    let baseUrl = `http://192.168.1.14:5000/steam/item/all/${appid}`;
+    let baseUrl = `${process.env.BASE_URL}/steam/item/all/${appid}`;
     let json = format.constructJSONPagination(baseUrl, data, page, range);
 
     res.json(json);

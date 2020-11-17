@@ -5,7 +5,6 @@
 const gameController = require('../controllers/GameController');
 const format = require('../util/format')
 const express = require('express');
-const axios = require('axios');
 const router = express.Router();
 
 module.exports = router;
