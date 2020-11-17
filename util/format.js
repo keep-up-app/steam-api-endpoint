@@ -132,3 +132,54 @@ function readablePrice(price) {
 }
 
 module.exports.readablePrice = readablePrice;
+
+
+/**
+ * Helper function for finding readable status
+ * 
+ * @param {Int} statusCode
+ * @returns {String} readable
+ */
+
+function getStatus(status) {
+    switch (status) {
+        case 0: return      'Offline'
+        case 1: return      'Online'
+        case 2: return      'Busy'
+        case 3: return      'Away'
+        case 4: return      'Snooze'
+        case 5: return      'Looking to Trade'
+        case 6: return      'Looking to Play'
+        default: return     'Unknown' 
+    }
+}
+
+module.exports.getStatus = getStatus;
+
+
+/**
+ * Get Time since from unix timstamp
+ * 
+ * @param {Int} time
+ * @returns {String} time
+ */
+
+module.exports.getTimeSince = (date) => {
+    var seconds = Math.floor((new Date() - date) / 1000);
+    var interval = seconds / 31536000;
+    if (interval > 1)
+        return Math.floor(interval) + " Years";
+    interval = seconds / 2592000;
+    if (interval > 1)
+        return Math.floor(interval) + " Months";
+    interval = seconds / 86400;
+    if (interval > 1)
+        return Math.floor(interval) + " Days";
+    interval = seconds / 3600;
+    if (interval > 1)
+        return Math.floor(interval) + " Hours";
+    interval = seconds / 60;
+    if (interval > 1)
+        return Math.floor(interval) + " Minutes";
+    return Math.floor(seconds) + " Seconds";
+}

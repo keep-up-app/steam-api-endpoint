@@ -5,6 +5,7 @@
 const axios = require('axios');
 const express = require("express");
 const auth = require('../util/auth');
+const SteamProfileController = require('../controllers/SteamProfileController');
 const router = express.Router();
 
 module.exports = router;
@@ -39,6 +40,26 @@ router.get('/authenticated', async(req, res) => {
 
         res.sendStatus(200);
 
+    } catch (error) {
+        res.sendStatus(500);
+        console.error(error);
+    }
+});
+
+
+/**
+ * Gets Steam profile by SteamId
+ * URI: /steam/user/profile
+ * 
+ * @method {GET}
+ */
+
+router.get('/profile/:steamid', async(req, res) => {
+    try {
+        let steamid = req.params.steamid;
+        let profile = await SteamProfileController.getProfile(steamid)
+            .catch(err => res.json({ error: err }));
+        return res.json(profile);
     } catch (error) {
         res.sendStatus(500);
         console.error(error);
