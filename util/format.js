@@ -164,32 +164,18 @@ module.exports.getStatus = getStatus;
  * @returns {String} time
  */
 
-module.exports.getTimeSince = (date) => {
-    var seconds = Math.floor((new Date() - date) / 1000);
-    var interval = seconds / 31536000;
+module.exports.getTimeSince = (time = 0) => {
+    let periods = ['Second', 'Minute', 'Hour', 'Day', 'Week', 'Month', 'Year', 'Decade'];
+    let durations = ['60', '60', '24', '7', '4.35', '12', '10'];
+    let diff = time;
 
-    var time = 0;
-    var period = 'Year';
+    var i = 0;
+    for (i = 0; diff >= durations[i] && i < durations.length - 1; i++)
+        diff /= durations[i];
 
-    if (interval > 1) {
-        time = Math.floor(interval);
-    } else if (interval > 1) {
-        interval = seconds / 2592000;
-        time = Math.floor(interval);
-        period = 'Month';
-    } else if (interval > 1) {
-        interval = seconds / 86400;
-        time = Math.floor(interval);
-        period = 'Day';
-    } else if (interval > 1) {
-        interval = seconds / 3600;
-        time = Math.floor(interval);
-        period = 'Hour';
-    } else if (interval > 1) {
-        interval = seconds / 60;
-        time = Math.floor(interval);
-        period = 'Minute';
-    } else time = Math.floor(seconds);
+    diff = Math.round(diff);
+    if (diff > 1) periods[i] += 's';
 
-    return `${time} ${time > 1 ? period + 's' : period}`;
+    if (diff == 0) return 'Never Played';
+    else return `${diff} ${periods[i]}`;
 }
