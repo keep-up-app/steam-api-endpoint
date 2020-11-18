@@ -98,28 +98,6 @@ module.exports.getAllGames = params => {
 
 
 /**
- * Get basic game info
- * @param {Object} params 
- */
-
-module.exports.getGameInfo = params => {
-    return new Promise(async(resolve, reject) => {
-
-        let appid = params['appid'];
-        let gameInfoUrl = params['url'];
-
-        let baseUrl = `${gameInfoUrl}=${appid}`;
-
-        const result = await axios.get(baseUrl)
-            .then(res => res.data)
-            .catch(err => reject(err))
-
-        return resolve(result ? result[appid].data : { error: 'No game found.' });
-    });
-}
-
-
-/**
  * Retreive game data for pagination 
  * 
  * @param {Object} params 
@@ -140,5 +118,20 @@ module.exports.getBasicInfo = (page, range) => {
             content: data.slice(from , to),
             total: data.length
         });
+    });
+}
+
+
+/**
+ * Retreive recently played games by steamid 
+ * 
+ * @param {Object} params 
+ */
+
+module.exports.getRecentlyPlayed = steamid => {
+    return new Promise(async(resolve, reject) => { 
+        let url = process.env.RECENT_GAME_URL + "?key=" + process.env.STEAM_API_KEY + "&steamid=" + steamid;
+        let data = await axios.get(url).then(res => res.data.response).catch(err => reject(err));
+        return resolve(data);
     });
 }

@@ -85,3 +85,19 @@ router.get('/all', async(req, res) => {
 
     res.send(json);
 });
+
+
+/**
+ * Get recently played
+ * URI: steam/game/recent
+ */
+
+router.get('/recent/:steamid', async(req, res) => {
+
+    let steamid = req.params.steamid;
+
+    let data = await gameController.getRecentlyPlayed(steamid)
+        .catch(err => res.send(err));
+
+    return res.json(data);
+});
