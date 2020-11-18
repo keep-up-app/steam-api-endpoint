@@ -2,7 +2,10 @@
  * Include all dependecies 
  */
 
-const format = require('../util/format');
+const TimeAgo = require('javascript-time-ago');
+const en = require('javascript-time-ago/locale/en');
+TimeAgo.locale(en)
+timeAgo = new TimeAgo('en-US');
 
 
 /**
@@ -14,10 +17,10 @@ const format = require('../util/format');
 module.exports.constructModel = data => {
     let steamid = data.steamid;
     let username = data.personaname;
-    let last_online = format.getTimeSince(data.lastlogoff * 1000) + ' ago';
+    let last_online = timeAgo.format(new Date(data.lastlogoff * 1000));
     let created_at = {
         'date': new Date(data.timecreated * 1000).toDateString(),
-        'duration': format.getTimeSince(data.timecreated * 1000) + ' ago'
+        'duration': timeAgo.format(new Date(data.timecreated * 1000))
     };
     let avatar = {
         'small': data.avatar,
@@ -38,5 +41,3 @@ module.exports.constructModel = data => {
         status
     }
 }
-
-

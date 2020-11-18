@@ -167,8 +167,9 @@ module.exports.getStatus = getStatus;
 module.exports.getTimeSince = (time = 0) => {
     let periods = ['Second', 'Minute', 'Hour', 'Day', 'Week', 'Month', 'Year', 'Decade'];
     let durations = ['60', '60', '24', '7', '4.35', '12', '10'];
-    let diff = time;
 
+    let diff = new Date() - time;
+    
     var i = 0;
     for (i = 0; diff >= durations[i] && i < durations.length - 1; i++)
         diff /= durations[i];
