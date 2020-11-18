@@ -167,19 +167,29 @@ module.exports.getStatus = getStatus;
 module.exports.getTimeSince = (date) => {
     var seconds = Math.floor((new Date() - date) / 1000);
     var interval = seconds / 31536000;
-    if (interval > 1)
-        return Math.floor(interval) + " Years";
-    interval = seconds / 2592000;
-    if (interval > 1)
-        return Math.floor(interval) + " Months";
-    interval = seconds / 86400;
-    if (interval > 1)
-        return Math.floor(interval) + " Days";
-    interval = seconds / 3600;
-    if (interval > 1)
-        return Math.floor(interval) + " Hours";
-    interval = seconds / 60;
-    if (interval > 1)
-        return Math.floor(interval) + " Minutes";
-    return Math.floor(seconds) + " Seconds";
+
+    var time = 0;
+    var period = 'Year';
+
+    if (interval > 1) {
+        time = Math.floor(interval);
+    } else if (interval > 1) {
+        interval = seconds / 2592000;
+        time = Math.floor(interval);
+        period = 'Month';
+    } else if (interval > 1) {
+        interval = seconds / 86400;
+        time = Math.floor(interval);
+        period = 'Day';
+    } else if (interval > 1) {
+        interval = seconds / 3600;
+        time = Math.floor(interval);
+        period = 'Hour';
+    } else if (interval > 1) {
+        interval = seconds / 60;
+        time = Math.floor(interval);
+        period = 'Minute';
+    } else time = Math.floor(seconds);
+
+    return `${time} ${time > 1 ? period + 's' : period}`;
 }
