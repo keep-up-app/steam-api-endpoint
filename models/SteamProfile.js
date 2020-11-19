@@ -18,6 +18,7 @@ timeAgo = new TimeAgo('en-US');
 module.exports.constructModel = data => {
     let steamid = data.steamid;
     let username = data.personaname;
+    let page = data.profileurl;
     let last_online = timeAgo.format(new Date(data.lastlogoff * 1000));
     let created_at = {
         'date': new Date(data.timecreated * 1000).toDateString(),
@@ -36,6 +37,7 @@ module.exports.constructModel = data => {
     return {
         steamid,
         username,
+        page,
         last_online,
         created_at,
         avatar,
