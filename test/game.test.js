@@ -2,9 +2,19 @@
  * Loading test dependencies
  */
 
-const request = require('supertest')
+const parser = require('body-parser');
+const request = require('supertest');
 const server = require('../server');
 const chai = require('chai');
+const chaiHttp = require('chai-http');
+
+
+/**
+ * Apply deps.
+ */
+
+chai.use(chaiHttp);
+server.use(parser.json());
 
 
 /**
@@ -16,10 +26,7 @@ var assert = chai.assert;
 var should = chai.should();
 
 
-// Usable json response data for testing
-
-
-describe.skip('GET steam/game/owned/', () => {
+describe('GET steam/game/owned/', () => {
 
     let expectedJson = require('./expected-json/owned-game-response.json');
     let valid = '76561198272843849';
@@ -27,20 +34,20 @@ describe.skip('GET steam/game/owned/', () => {
 
     it('With valid steamid', (done) => {
         request(server).get(`/steam/game/owned/${valid}`)
-            .end(async(err, res) => {
-                let body = await res.body;
-                res.status.should.be.equal(200);
-                body.games.should.be.a('array');
-                body.games[0].name.should.be.equal(expectedJson.games[0].name);
+            .end((err, res) => {
+                console.log(res.body);
+                expect(res.statusCode).to.equal(200);
+                expect(res.body.response.game_count).to.equal(29);
                 done();
             })
     });
 
-    it('With invalid steamid', (done) => {
+    it.skip('With invalid steamid', (done) => {
         request(server).get(`/steam/game/owned/${invalid}`)
             .end((err, res) => {
-                res.status.should.be.equal(400);
-                res.body.error.should.be.equal(`Invalid steamid provided: ${invalid}`)
+                console.log(res.body);
+                expect(res.statusCode).to.equal(400);
+                expect(res.body.error).to.equal(`Invalid steamid provided: ${invalid}`)
                 done();
             });
     });
