@@ -35,7 +35,6 @@ describe('GET steam/game/owned/', () => {
     it('With valid steamid', (done) => {
         request(server).get(`/steam/game/owned/${valid}`)
             .end((err, res) => {
-                console.log(res.body);
                 expect(res.statusCode).to.equal(200);
                 expect(res.body.response.game_count).to.equal(29);
                 done();
@@ -45,7 +44,6 @@ describe('GET steam/game/owned/', () => {
     it.skip('With invalid steamid', (done) => {
         request(server).get(`/steam/game/owned/${invalid}`)
             .end((err, res) => {
-                console.log(res.body);
                 expect(res.statusCode).to.equal(400);
                 expect(res.body.error).to.equal(`Invalid steamid provided: ${invalid}`)
                 done();
