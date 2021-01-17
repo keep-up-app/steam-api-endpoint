@@ -36,7 +36,7 @@ describe('GET steam/game/owned/', () => {
         request(server).get(`/steam/game/owned/${valid}`)
             .end((err, res) => {
                 expect(res.statusCode).to.equal(200);
-                expect(res.body.response.game_count).to.equal(29);
+                expect(res.body.response.game_count).to.equal(32);
                 done();
             })
     });
