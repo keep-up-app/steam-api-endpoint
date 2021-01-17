@@ -8,11 +8,7 @@
 module.exports.checkArgValidity = fields => {
     for (var key in fields) {
         var field = fields[key];
-        if (field === undefined || field == "")
-            return key;
-        else if (key == 'steamid' && field.length != 17)
-            return key;
-        else if (key == 'appid' && !parseInt(Number(field)))
+        if ((field === undefined || field == "") || (key == 'steamid' && field.length != 17) || (key == 'appid' && !parseInt(Number(field))))
             return key;
     }
 }

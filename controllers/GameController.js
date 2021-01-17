@@ -59,17 +59,15 @@ module.exports.getGameInfo = params => {
  * @param {Object} params 
  */
 
-module.exports.getAllGames = params => {
+module.exports.getAllGames = () => {
     return new Promise(async(resolve, reject) => {
-
-        let count = params.count || 10;
 
         let url = process.env.ALL_GAME_URL + "key=" + process.env.STEAM_API_KEY;
         let data = await axios.get(url).catch(err => reject(err));
 
         var games = [];
 
-        count = 0;
+        var count = 0;
         while(games.length <= count) {
             let appid = data.data.applist.apps[count].appid
             
@@ -111,7 +109,7 @@ module.exports.getBasicInfo = (page, range) => {
 
         let url = process.env.ALL_GAME_URL + "key=" + process.env.STEAM_API_KEY;
         let data = await axios.get(url)
-            .then(data => data.data.applist.apps)
+            .then(res => res.data.applist.apps)
             .catch(err => reject(err));
 
         return resolve({

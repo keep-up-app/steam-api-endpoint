@@ -6,7 +6,7 @@ const format = require('../util/format');
 const TimeAgo = require('javascript-time-ago');
 const en = require('javascript-time-ago/locale/en');
 TimeAgo.locale(en)
-timeAgo = new TimeAgo('en-US');
+const timeAgo = new TimeAgo('en-US');
 
 
 /**
