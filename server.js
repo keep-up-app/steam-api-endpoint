@@ -19,6 +19,7 @@ const parser = require("body-parser");
  */
 
 const server = express();
+server.disable("x-powered-by");
 server.use(parser.json());
 module.exports = server
 
